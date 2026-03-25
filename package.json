@@ -1,0 +1,25 @@
+{
+  "name": "@viett.2/contracts",
+  "version": "1.0.0",
+  "description": "protobuf contracts for Cinema",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "protoc -I ./proto ./proto/*.proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./gen --ts_proto_opt=nestJs=true,package=omit"
+  },
+  "files": [
+    "proto",
+    "gen"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "commonjs",
+  "devDependencies": {
+    "ts-proto": "^2.11.6"
+  },
+  "dependencies": {
+    "@nestjs/microservices": "^11.1.17",
+    "rxjs": "^7.8.2"
+  }
+}
