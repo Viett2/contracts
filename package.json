@@ -1,6 +1,6 @@
 {
   "name": "@viett.2/contracts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "protobuf contracts for Cinema",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -9,6 +9,7 @@
     "generate": "protoc -I ./proto ./proto/*.proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./gen --ts_proto_opt=nestJs=true,package=omit"
   },
   "files": [
+    "dist",
     "proto",
     "gen"
   ],
