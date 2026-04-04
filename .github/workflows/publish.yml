@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm install --frozen-lockfile
 
+      - name: Build the package
+        run: npm run build
+
       - name: Generate TypeScript code from protobuf definitions
         run: npm run generate
 
