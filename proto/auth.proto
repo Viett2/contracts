@@ -50,7 +50,10 @@ message TelegramVerifyRequest {
 }
 
 message TelegramVerifyResponse {
-  string url           = 1;
-  string access_token  = 2;
-  string refresh_token = 3;
+  oneof result {
+    string url           = 1;
+    string access_token  = 2;
+    string refresh_token = 3;
+  }
+
 }
