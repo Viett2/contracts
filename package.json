@@ -1,6 +1,6 @@
 {
   "name": "@viett.2/contracts",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "protobuf contracts for Cinema",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
