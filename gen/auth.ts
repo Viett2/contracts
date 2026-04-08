@@ -7,6 +7,7 @@
 /* eslint-disable */
 import { GrpcMethod, GrpcStreamMethod } from "@nestjs/microservices";
 import { Observable } from "rxjs";
+import { Empty } from "./google/protobuf/empty";
 
 export const protobufPackage = "auth.v1";
 
@@ -30,23 +31,65 @@ export interface VerifyOtpResponse {
   refreshToken: string;
 }
 
+export interface RefreshRequest {
+  refreshToken: string;
+}
+
+export interface RefreshResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface TelegramInitResponse {
+  url: string;
+}
+
+export interface TelegramVerifyRequest {
+  query: { [key: string]: string };
+}
+
+export interface TelegramVerifyRequest_QueryEntry {
+  key: string;
+  value: string;
+}
+
+export interface TelegramVerifyResponse {
+  url?: string | undefined;
+  accessToken?: string | undefined;
+  refreshToken?: string | undefined;
+}
+
 export const AUTH_V1_PACKAGE_NAME = "auth.v1";
 
 export interface AuthServiceClient {
   sendOtp(request: SendOtpRequest): Observable<SendOtpResponse>;
 
   verifyOtp(request: VerifyOtpRequest): Observable<VerifyOtpResponse>;
+
+  refresh(request: RefreshRequest): Observable<RefreshResponse>;
+
+  telegramInit(request: Empty): Observable<TelegramInitResponse>;
+
+  telegramVerify(request: TelegramVerifyRequest): Observable<TelegramVerifyResponse>;
 }
 
 export interface AuthServiceController {
   sendOtp(request: SendOtpRequest): Promise<SendOtpResponse> | Observable<SendOtpResponse> | SendOtpResponse;
 
   verifyOtp(request: VerifyOtpRequest): Promise<VerifyOtpResponse> | Observable<VerifyOtpResponse> | VerifyOtpResponse;
+
+  refresh(request: RefreshRequest): Promise<RefreshResponse> | Observable<RefreshResponse> | RefreshResponse;
+
+  telegramInit(request: Empty): Promise<TelegramInitResponse> | Observable<TelegramInitResponse> | TelegramInitResponse;
+
+  telegramVerify(
+    request: TelegramVerifyRequest,
+  ): Promise<TelegramVerifyResponse> | Observable<TelegramVerifyResponse> | TelegramVerifyResponse;
 }
 
 export function AuthServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["sendOtp", "verifyOtp"];
+    const grpcMethods: string[] = ["sendOtp", "verifyOtp", "refresh", "telegramInit", "telegramVerify"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("AuthService", method)(constructor.prototype[method], method, descriptor);
